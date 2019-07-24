@@ -12,6 +12,9 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = merge(baseConfig, {
   devtool: 'source-map',
+  output: {
+    publicPath: './'
+  },
   module: {
     rules: [
       {
