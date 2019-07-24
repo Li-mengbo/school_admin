@@ -11,41 +11,81 @@
         </el-option>
       </el-select>
     </div>
-    <el-table
-      :data="tableData"
-      style="width: 100%;margin-bottom: 20px;"
-      row-key="id"
-      border
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-      >
-      <el-table-column
-        label="id"
-        prop="id">
-      </el-table-column>
-      <el-table-column
-        label="标题"
-        prop="title">
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button
-            size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <!-- <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
-        </template>
-      </el-table-column>
-    </el-table>
+    <div v-if="value == 0">
+      <el-table
+        :data="tableData"
+        style="width: 100%;margin-bottom: 20px;"
+        row-key="id"
+        border
+        >
+        <el-table-column
+          label="id"
+          prop="id">
+        </el-table-column>
+        <el-table-column
+          label="标题"
+          prop="title">
+        </el-table-column>
+        <el-table-column
+          label="说明"
+          prop="description">
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <!-- <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
+    <div v-if="value == 1">
+      <el-table
+        :data="centerdata"
+        style="width: 100%;margin-bottom: 20px;"
+        row-key="id"
+        border
+        >
+        <el-table-column
+          label="id"
+          prop="id">
+        </el-table-column>
+        <el-table-column
+          label="标题"
+          prop="title">
+        </el-table-column>
+        <el-table-column
+          label="位置"
+          prop="center">
+        </el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <el-button
+              size="mini"
+              @click="handleEdit1(scope.$index, scope.row)">编辑</el-button>
+            <!-- <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(scope.$index, scope.row)">删除</el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
     <el-dialog
       :title="title"
       :visible.sync="dialogVisible"
       width="50%"
       center>
-      <el-form :model="form" ref="ruleForm">
-        <el-form-item label="姓名" prop="name" :label-width="formLabelWidth" :rules="{required: true, message: '姓名不能为空'}">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
+      <el-form :model="form0" ref="ruleForm">
+        <el-form-item label="标题" prop="title" :label-width="formLabelWidth">
+          <el-input v-model="form0.title" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" prop="content" :label-width="formLabelWidth">
+          <el-input v-model="form0.content" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -53,10 +93,29 @@
         <el-button type="primary" @click="setTable('ruleForm')">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogVisible1"
+      width="50%"
+      center>
+      <el-form :model="form1" ref="ruleForm">
+        <el-form-item label="标题" prop="title" :label-width="formLabelWidth">
+          <el-input v-model="form1.title" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="位置" prop="center" :label-width="formLabelWidth">
+          <el-input v-model="form1.center" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible1 = false">取 消</el-button>
+        <el-button type="primary" @click="setTable1('ruleForm')">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+//
   import { companyList, setCompanyList, addCompanyList } from '../../api/nav1.js';
   import { mapGetters } from 'vuex';
   export default {
@@ -64,29 +123,33 @@
       return {
         options: [{
           value: '0',
-          label: '活动查询'
+          label: '修改内容'
         }, {
           value: '1',
-          label: '校庆专题'
-        }, {
-          value: '2',
-          label: '迎新专题'
+          label: '修改位置'
         }],
         value: '',
         dialogVisible: false,
-        form: {
-          name: '',
-          status:'DEL'
+        dialogVisible1: false,
+        form0: {
+          title: '',
+          content: ''
+        },
+        form1: {
+          title: '',
+          center: ''
         },
         formLabelWidth: '120px',
         setIndex: '',
         title: '',
-        type: ''
+        type: '',
+        type1: ''
       }
     },
     computed: {
       ...mapGetters({
-        tableData: 'data'
+        tableData: 'contentdata',
+        centerdata: 'centerdata'
       })
     },
     methods: {
@@ -96,11 +159,21 @@
         this.$store.dispatch('getCompanyList', {value})
       },
       handleEdit(index, row) {
+        console.log(row)
         this.dialogVisible = true;
-        this.setIndex = index;
-        this.form.id = row.id;
+        // this.setIndex = index;
+        this.form0.id = row.id;
         this.title = '编辑';
         this.type = 'set';
+        console.log(index, row);
+      },
+      handleEdit1(index, row) {
+        console.log(row)
+        this.dialogVisible1 = true;
+        // this.setIndex = index;
+        this.form1.id = row.id;
+        this.title = '编辑';
+        this.type1 = 'set';
         console.log(index, row);
       },
       handleDelete(index, row) {
@@ -109,13 +182,33 @@
       setTable(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            console.log(this.form)
-            const form = this.form;
+            const form = this.form0;
+            const value = this.value;
             if(this.type == 'add') {
               this.$store.dispatch('addCompanyList', form)
             }else {
-              const index = this.setIndex;
-              this.$store.dispatch('setCompanyList', {form, index})
+              console.log(form)
+              // const index = this.setIndex;
+              this.$store.dispatch('setContent', {form, value})
+            }
+            this.dialogVisible = false;
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      setTable1(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            console.log(this.form)
+            const form = this.form1;
+            const value = this.value;
+            if(this.type1 == 'add') {
+              this.$store.dispatch('addCompanyList', form)
+            }else {
+              // const index = this.setIndex;
+              this.$store.dispatch('setCenter', {form, value})
             }
             this.dialogVisible = false;
           } else {
@@ -129,9 +222,6 @@
         this.title = '增加';
         this.type = 'add';
       }
-    },
-    created () {
-      // this.$store.dispatch('getCompanyList')
     }
   }
 </script>

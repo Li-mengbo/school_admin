@@ -1,5 +1,6 @@
 const getters = {
   flag: state => state.login.flag,
-  data: state => state.navList.data
+  contentdata: state => state.navList.contentdata,
+  centerdata: state => state.navList.centerdata
 }
 export default getters

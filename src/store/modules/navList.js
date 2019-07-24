@@ -1,26 +1,42 @@
-import { companyList, setCompanyList, addCompanyList } from '../../api/nav1.js';
+import { companyList, setContent, setCenter, addCompanyList } from '../../api/nav1.js';
 const navList = {
   state: {
-    data: [],
+    contentdata: [],
+    centerdata: [],
   },
   mutations: {
     GET_LIST: (state, data) => {
-      let newData = [];
+      console.log(data)
+      if(data.value == 0) {
+        state.contentdata = data.list
+      }
       //旧key到新key的映射
       const keyMap = {
-        "positions" : "children"
+        "description" : "center"
       };
-      for(var i = 0;i < data.length;i++){
-        var obj = data[i];
-        for(var key in obj){
-            var newKey = keyMap[key];
-            if(newKey){
-              obj[newKey] = obj[key];
-              delete obj[key];
+      if(data.value == 1) {
+        const centerList = [];
+        console.log(data.list.length)
+        data.list.forEach(item => {
+          if(item.positions.length > 0) {
+            item.positions.forEach(items => {
+              centerList.push(items)
+            })
+          }else {
+            // 修改key值
+            for(var key in item){
+              var newKey = keyMap[key];
+              if(newKey){
+                item[newKey] = item[key];
+                delete item[key];
+              }
             }
-        }
+            centerList.push(item)
+          }
+        });
+        console.log(centerList)
+        state.centerdata = centerList
       }
-      state.data = data
     },
     SET_LIST: (state, { data, index }) => {
       state.data[index] = data
@@ -29,23 +45,53 @@ const navList = {
   actions: {
     getCompanyList({ commit }, { value }) {
       return new Promise((resolve, reject) => {
-        companyList(value).then(res => {
+        let list = [];
+        for(let i = 0; i < 3; i++) {
+          companyList(i).then(res => {
+            if(res.code == 200) {
+              // console.log(res.data[value])
+              if(value == 0 && res.data[value].title !== '报名地点') {
+                list.push(res.data[value]);
+              }
+              if(value == 1) {
+                if(res.data[0].title == '报名地点') {
+                  list.push(res.data[0])
+                }
+                list.push(res.data[value]);
+              }
+            }
+          }).catch(error => {
+            reject(error);
+          })
+        }
+        setTimeout(()=>{
+          commit('GET_LIST', {list, value});
+          resolve(list);
+        },500)
+      })
+    },
+    setContent({dispatch, commit}, { form, value }) {
+      return new Promise((resolve, reject) => {
+        setContent(form).then(res => {
            if(res.code == 200) {
-            commit('GET_LIST', res.data);
-            resolve(res.data);
+              dispatch('getCompanyList', {value})
+            //  const data = res.data;
+            //  commit('SET_LIST', { data, index });
+            //  resolve(res.data);
           }
         }).catch(error => {
           reject(error);
         })
       })
     },
-    setCompanyList({commit}, { form, index }) {
+    setCenter({commit}, { form, value }) {
       return new Promise((resolve, reject) => {
-        setCompanyList(form).then(res => {
+        setCenter(form).then(res => {
            if(res.code == 200) {
-             const data = res.data;
-             commit('SET_LIST', { data, index });
-             resolve(res.data);
+             debugger
+            //  const data = res.data;
+            //  commit('SET_LIST', { data, index });
+            //  resolve(res.data);
           }
         }).catch(error => {
           reject(error);
