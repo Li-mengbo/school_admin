@@ -22,6 +22,13 @@ export function setCenter(data) {
     data,
   })
 }
+// 获取所有坐标点
+export function getCenterList(data) {
+  return request({
+    url: '/school-map/sitePosition/getAll',
+    method: 'get',
+  })
+}
 export function addCompanyList(data) {
   return request({
     url: '/manageBase/company',

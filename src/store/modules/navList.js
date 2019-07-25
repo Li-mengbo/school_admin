@@ -89,11 +89,11 @@ const navList = {
         })
       })
     },
-    setCenter({commit}, { form, value }) {
+    setCenter({dispatch, commit}, { form, value }) {
       return new Promise((resolve, reject) => {
         setCenter(form).then(res => {
            if(res.code == 200) {
-             debugger
+            dispatch('getCompanyList', {value})
             //  const data = res.data;
             //  commit('SET_LIST', { data, index });
             //  resolve(res.data);
