@@ -18,21 +18,26 @@ const navList = {
         const centerList = [];
         console.log(data.list.length)
         data.list.forEach(item => {
-          if(item.positions.length > 0) {
-            item.positions.forEach(items => {
-              centerList.push(items)
-            })
-          }else {
-            // 修改key值
-            for(var key in item){
-              var newKey = keyMap[key];
-              if(newKey){
-                item[newKey] = item[key];
-                delete item[key];
-              }
-            }
-            centerList.push(item)
-          }
+          let name = item.title;
+          item.positions.forEach(items => {
+            items.type = name;
+            centerList.push(items)
+          })
+          // if(item.positions.length > 0) {
+          //   item.positions.forEach(items => {
+          //     centerList.push(items)
+          //   })
+          // }else {
+          //   // 修改key值
+          //   for(var key in item){
+          //     var newKey = keyMap[key];
+          //     if(newKey){
+          //       item[newKey] = item[key];
+          //       delete item[key];
+          //     }
+          //   }
+          //   centerList.push(item)
+          // }
         });
         console.log(centerList)
         state.centerdata = centerList
@@ -50,13 +55,13 @@ const navList = {
           companyList(i).then(res => {
             if(res.code == 200) {
               // console.log(res.data[value])
-              if(value == 0 && res.data[value].title !== '报名地点') {
+              if(value == 0) {
+                if(res.data[1].positions.length == 0) {
+                  list.push(res.data[1])
+                }
                 list.push(res.data[value]);
               }
-              if(value == 1) {
-                if(res.data[0].title == '报名地点') {
-                  list.push(res.data[0])
-                }
+              if(value == 1 && res.data[1].positions.length > 0) {
                 list.push(res.data[value]);
               }
             }

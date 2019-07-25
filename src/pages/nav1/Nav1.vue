@@ -55,6 +55,10 @@
           prop="id">
         </el-table-column>
         <el-table-column
+          label="活动类型"
+          prop="type">
+        </el-table-column>
+        <el-table-column
           label="标题"
           prop="title">
         </el-table-column>
@@ -84,8 +88,8 @@
         <el-form-item label="标题" prop="title" :label-width="formLabelWidth">
           <el-input v-model="form0.title" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="内容" prop="content" :label-width="formLabelWidth">
-          <el-input v-model="form0.content" autocomplete="off"></el-input>
+        <el-form-item label="内容" prop="description" :label-width="formLabelWidth">
+          <el-input v-model="form0.description" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -133,7 +137,7 @@
         dialogVisible1: false,
         form0: {
           title: '',
-          content: ''
+          description: ''
         },
         form1: {
           title: '',
@@ -159,10 +163,14 @@
         this.$store.dispatch('getCompanyList', {value})
       },
       handleEdit(index, row) {
-        console.log(row)
+        console.log(11111, row)
         this.dialogVisible = true;
         // this.setIndex = index;
         this.form0.id = row.id;
+        this.form0 = {
+          title: row.title,
+          description: row.description
+        }
         this.title = '编辑';
         this.type = 'set';
         console.log(index, row);
@@ -172,6 +180,10 @@
         this.dialogVisible1 = true;
         // this.setIndex = index;
         this.form1.id = row.id;
+        this.form1 = {
+          title: row.title,
+          center: row.center
+        }
         this.title = '编辑';
         this.type1 = 'set';
         console.log(index, row);
