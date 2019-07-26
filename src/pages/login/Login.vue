@@ -9,7 +9,7 @@
         <el-input type="password" v-model="loginForm.password" autocomplete="off" show-password placeholder="密码"/>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="submitForm('loginForm')">
+        <el-button type="primary" style="width:100%;" @click.native.prevent="submitForm('loginForm')">
           登录
         </el-button>
       </el-form-item>
