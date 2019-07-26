@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" autocomplete="off" class="login-form">
-      <h3 class="title">登录</h3>
+      <h3 class="title">北京财贸</h3>
       <el-form-item prop="userName" class="el-form-item">
         <el-input v-model="loginForm.userName" name="userName" type="text" autocomplete="off" placeholder="账号"/>
       </el-form-item>
@@ -9,7 +9,9 @@
         <el-input type="password" v-model="loginForm.password" autocomplete="off" show-password placeholder="密码"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="submitForm('loginForm')">
+          登录
+        </el-button>
       </el-form-item>
     </el-form>
   </div>

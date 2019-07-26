@@ -54,16 +54,17 @@ const navList = {
         for(let i = 0; i < 3; i++) {
           companyList(i).then(res => {
             if(res.code == 200) {
+              list.push(res.data[value]);
               // console.log(res.data[value])
-              if(value == 0) {
-                if(res.data[1].positions.length == 0) {
-                  list.push(res.data[1])
-                }
-                list.push(res.data[value]);
-              }
-              if(value == 1 && res.data[1].positions.length > 0) {
-                list.push(res.data[value]);
-              }
+              // if(value == 0) {
+              //   if(res.data[1].positions.length == 0) {
+              //     list.push(res.data[1])
+              //   }
+              //   list.push(res.data[value]);
+              // }
+              // if(value == 1 && res.data[1].positions.length > 0) {
+              //   list.push(res.data[value]);
+              // }
             }
           }).catch(error => {
             reject(error);
