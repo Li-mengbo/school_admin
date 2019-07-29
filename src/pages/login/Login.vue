@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" autocomplete="off" class="login-form">
-      <h3 class="title">北京财贸</h3>
+      <h3 class="title">北京财贸职业学院</h3>
       <el-form-item prop="userName" class="el-form-item">
         <el-input v-model="loginForm.userName" name="userName" type="text" autocomplete="off" placeholder="账号"/>
       </el-form-item>

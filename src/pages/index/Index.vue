@@ -1,7 +1,7 @@
 <template>
   <div class="index">
       <h1>
-        北京财贸欢迎你
+        北京财贸职业学院欢迎你
       </h1>
   </div>
 </template>
