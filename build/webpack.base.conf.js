@@ -59,6 +59,16 @@ module.exports = {
     new VueLoaderPlugin(), // 它的职责是将你定义过的其它规则复制并应用到 .vue 文件里相应语言的块
     new webpack.optimize.SplitChunksPlugin() // 提取公共代码
   ],
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://wxy.bjczy.edu.cn:8065',
+        pathRewrite: {'^/api' : ''},
+        changeOrigin: true,     // target是域名的话，需要这个参数，
+        secure: true,          // 设置支持https协议的代理
+      }
+    }
+  },
   resolve: {
     extensions: ['.js', '.css', '.vue'],// 省去后缀
     alias: {
