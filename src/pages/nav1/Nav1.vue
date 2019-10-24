@@ -175,10 +175,8 @@
     },
     created () {
       getCenterList().then(res => {
-        console.log(res)
         if(res.code == 200) {
           this.centerList = res.data;
-          console.log(res.data)
         }
       }).catch(reeor => {
         console.log(error)

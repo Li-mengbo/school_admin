@@ -41,7 +41,8 @@ module.exports = merge(baseConfig, {
   devServer: {
     contentBase: path.resolve(__dirname, '../dist'), //告诉服务其从哪提供内容
     hot: true,
-    open: true
+    open: true,
+    port: 8889,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(), // 开启热更新

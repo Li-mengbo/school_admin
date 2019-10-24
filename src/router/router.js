@@ -27,7 +27,7 @@ export default new Router({
       children: [{
         path: 'index',
         name:'Index',
-        meta: { title: '首页', url: '/dashboard/index' },
+        meta: { title: '修改位置', url: '/dashboard/index' },
         component: () => import('@/pages/index/Index'),
       }]
     },
