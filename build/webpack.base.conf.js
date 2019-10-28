@@ -53,7 +53,7 @@ module.exports = {
       filename: '[name]_[hash].js',
       path: './dll',
       entry: {
-        vendor: ['vue', 'vue-router', 'vuex', 'element-ui']
+        vendor: ['vue', 'vue-router', 'vuex']
       }
     }), //单独打包第三方库
     new VueLoaderPlugin(), // 它的职责是将你定义过的其它规则复制并应用到 .vue 文件里相应语言的块

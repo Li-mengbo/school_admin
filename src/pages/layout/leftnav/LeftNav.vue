@@ -9,24 +9,12 @@
       :default-active="$route.path">
       <el-menu-item index="/dashboard/index" route="/dashboard/index">
         <i class="el-icon-menu"></i>
-        <span slot="title">首页</span>
+        <span slot="title">修改具体位置</span>
       </el-menu-item>
-      <el-submenu index="/nav">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="/nav/nav1" route="/nav/nav1">
-            <span slot="title">修改活动位置</span>
-          </el-menu-item>
-        </el-menu-item-group>
-        <!-- <el-menu-item-group>
-          <el-menu-item index="/nav/nav2" route="/nav/nav2">
-            <span slot="title">修改活动说明</span>
-          </el-menu-item>
-        </el-menu-item-group> -->
-      </el-submenu>
+      <el-menu-item index="/nav/nav1" route="/nav/nav1">
+        <i class="el-icon-menu"></i>
+        <span slot="title">修改活动位置</span>
+      </el-menu-item>
       <!--
       <el-menu-item index="/nav/nav1" route="/nav/nav1">
         <i class="el-icon-menu"></i>

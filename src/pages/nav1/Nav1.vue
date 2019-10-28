@@ -34,7 +34,9 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit(scope.$index, scope.row)"
+              icon="el-icon-edit"
+            >编辑</el-button>
             <!-- <el-button
               size="mini"
               type="danger"
@@ -66,7 +68,9 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleEdit1(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit1(scope.$index, scope.row)"
+              icon="el-icon-edit"
+            >编辑</el-button>
             <!-- <el-button
               size="mini"
               type="danger"
